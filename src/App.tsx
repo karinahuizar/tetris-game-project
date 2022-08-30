@@ -6,9 +6,6 @@ import { useInterval } from './hooks/useInterval';
 import { usePlayer } from './hooks/usePlayer';
 import { useStage } from './hooks/useStage';
 
-const { player, updatePlayerPos, resetPlayer } = usePlayer();
-const { stage, setStage } = useStage(player, resetPlayer);
-
 //Components
 import Stage from './components/Stage/Stage';
 import Display from './components/Display/Display';
@@ -20,6 +17,27 @@ import { StyledTetrisWrapper, StyledTetris } from './App.styles';
 const App: React.FC = () => {
   const [dropTime, setDropTime] = React.useState<null | number>(null);
   const [gameOver, setGameOver] = React.useState(true);
+
+  const { player, updatePlayerPos, resetPlayer } = usePlayer();
+  const { stage, setStage } = useStage(player, resetPlayer);
+
+  const movePlayer = (dir: number) => {
+    updatePlayerPos({ x: dir, y: 0, collided: false });
+  };
+
+  const move = ({ keyCode, repeat }: { keyCode: number; repeat: boolean; }): void => {
+    if (keyCode === 37) {
+      movePlayer(-1);
+    } else if (keyCode === 39) {
+      movePlayer(1);
+    } else if (keyCode === 40) {
+      // Just call once
+      if (repeat) return;
+      setDroptime(30);
+    } else if (keyCode === 38) {
+      // Implement this later
+    }
+  };
 
   return (
     <StyledTetrisWrapper role='button' tabIndex={0}>
