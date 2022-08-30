@@ -6,6 +6,9 @@ import { useInterval } from './hooks/useInterval';
 import { usePlayer } from './hooks/usePlayer';
 import { useStage } from './hooks/useStage';
 
+const { player, updatePlayerPos, resetPlayer } = usePlayer();
+const { stage, setStage } = useStage(player, resetPlayer);
+
 //Components
 import Stage from './components/Stage/Stage';
 import Display from './components/Display/Display';
